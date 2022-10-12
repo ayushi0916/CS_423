@@ -114,8 +114,8 @@ class Sigma3Transformer(BaseEstimator, TransformerMixin):
     return result
   
 class TukeyTransformer(BaseEstimator, TransformerMixin):
-  def __init__(self,column_name,fence):
-    self.column_name = column_name  #column to focus on
+  def __init__(self,target_column,fence):
+    self.target_column = target_column  #column to focus on
     self.fence = fence
   
   def fit(self, X, y = None):
@@ -125,21 +125,21 @@ class TukeyTransformer(BaseEstimator, TransformerMixin):
   def transform(self, X):
     X_ = X.copy()
     if self.fence == 'inner':
-      q1 = X_[self.column_name].quantile(0.25)
-      q3 = X_[self.column_name].quantile(0.75)
+      q1 = X_[self.target_column].quantile(0.25)
+      q3 = X_[self.target_column].quantile(0.75)
       iqr = q3-q1
       inner_low = q1-1.5*iqr
       inner_high = q3+1.5*iqr
-      X_[self.column_name]=(X_[self.column_name].clip(lower=inner_low, upper=inner_high))
+      X_[self.target_column]=(X_[self.target_column].clip(lower=inner_low, upper=inner_high))
       return X_
 
     elif self.fence == 'outer':
-      q1 = X_[self.column_name].quantile(0.25)
-      q3 = X_[self.column_name].quantile(0.75)
+      q1 = X_[self.target_column].quantile(0.25)
+      q3 = X_[self.target_column].quantile(0.75)
       iqr = q3-q1
       outer_low = q1-3*iqr
       outer_high = q3+3*iqr
-      X_[self.column_name]=(X_[self.column_name].clip(lower=outer_low, upper=outer_high))
+      X_[self.target_column]=(X_[self.target_column].clip(lower=outer_low, upper=outer_high))
       return X_
 
     
