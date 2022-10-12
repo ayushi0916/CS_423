@@ -41,6 +41,8 @@ class MappingTransformer(BaseEstimator, TransformerMixin):
 class OHETransformer(BaseEstimator, TransformerMixin):
   def __init__(self, target_column, dummy_na=False, drop_first=False):
     self.target_column = target_column  #column to focus on
+    self.dummy_na = dummy_na
+    self.drop_first = drop_first
   
   def fit(self, X, y = None):
     print(f"\nWarning: {self.__class__.__name__}.fit does nothing.\n")
@@ -52,8 +54,8 @@ class OHETransformer(BaseEstimator, TransformerMixin):
     return pd.get_dummies(X_,prefix= self.target_column,
                           prefix_sep='_',
                           columns=[self.target_column],
-                          dummy_na = False,
-                          drop_first = False)
+                          dummy_na = self.dummy_na,
+                          drop_first = self.drop_first)
     
   def fit_transform(self, X, y = None):
     result = self.transform(X)
