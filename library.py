@@ -89,8 +89,8 @@ class DropColumnsTransformer(BaseEstimator, TransformerMixin):
     return result
   
 class Sigma3Transformer(BaseEstimator, TransformerMixin):
-  def __init__(self,column_name):
-    self.column_name = column_name  #column to focus on
+  def __init__(self,target_column):
+    self.target_column = target_column  #column to focus on
   
   def fit(self, X, y = None):
     print(f"\nWarning: {self.__class__.__name__}.fit does nothing.\n")
@@ -99,13 +99,13 @@ class Sigma3Transformer(BaseEstimator, TransformerMixin):
   def transform(self, X):
     X_ = X.copy()
     assert isinstance(X_, pd.core.frame.DataFrame), f'expected Dataframe but got {type(X_)} instead.'
-    assert self.column_name in X_.columns.to_list(), f'unknown column {self.column_name}'
-    assert all([isinstance(v, (int, float)) for v in X_[self.column_name].to_list()])
+    assert self.target_column in X_.columns.to_list(), f'unknown column {self.target_column}'
+    assert all([isinstance(v, (int, float)) for v in X_[self.target_column].to_list()])
 
     #your code below
-    sigma = X_[self.column_name].std()
-    mu = X_[self.column_name].mean()
-    X_[self.column_name]=(X_[self.column_name].clip(lower=mu-3*sigma, upper=mu+3*sigma))
+    sigma = X_[self.target_column].std()
+    mu = X_[self.target_column].mean()
+    X_[self.target_column]=(X_[self.target_column].clip(lower=mu-3*sigma, upper=mu+3*sigma))
     return X_
     
   def fit_transform(self, X, y = None):
