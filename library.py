@@ -114,8 +114,8 @@ class Sigma3Transformer(BaseEstimator, TransformerMixin):
     return result
  
 class TukeyTransformer(BaseEstimator, TransformerMixin):
-  def __init__(self,column_name,fence):
-    self.column_name = column_name  #column to focus on
+  def __init__(self,target_column,fence):
+    self.column_name = target_column  #column to focus on
     self.fence = fence
   
   def fit(self, X, y = None):
