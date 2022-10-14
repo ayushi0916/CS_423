@@ -147,3 +147,25 @@ class TukeyTransformer(BaseEstimator, TransformerMixin):
     result = self.transform(X)
 
     return result
+
+class MinMaxTransformer(BaseEstimator, TransformerMixin):
+  def __init__(self):
+    pass  #takes no 
+      #fill in rest below
+  
+  def fit(self, X, y = None):
+    print(f"Warning: {self.__class__.__name__}.fit does nothing.")
+    return X 
+    
+  def transform(self, X):
+    X_ = X.copy()
+    min_value = X_.min()
+    max_value = X_.max()
+    den = (max_value-min_value)
+    X_ -= min_value
+    X_ /=den
+    return X_
+
+  def fit_transform(self, X, y = None):
+    result = self.transform(X)
+    return result
