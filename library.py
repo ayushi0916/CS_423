@@ -88,6 +88,30 @@ class DropColumnsTransformer(BaseEstimator, TransformerMixin):
     result = self.transform(X)
     return result
   
+class PearsonTransformer(BaseEstimator, TransformerMixin):
+  def __init__(self, threshold):
+    self.threshold = threshold  #column to focus on
+   
+  def fit(self, X, y = None):
+    print(f"\nWarning: {self.__class__.__name__}.fit does nothing.\n")
+    return X
+    
+  def transform(self, X):
+    #assert self.target_column in X.columns.to_list(), f'{self.__class__.__name__}.transform unknown column "{self.target_column}"'  #column legit?
+    X_ = X.copy()
+    df_corr = X_.corr(method='pearson')
+    masked_df = df_corr.abs() > self.threshold
+    upper_mask = np.triu(masked_df,k=True)
+    correlated_columns = [masked_df.columns[j] for i,j in enumerate((np.any(upper_mask == True, axis=0).nonzero()[len(np.any(upper_mask == True, axis=0).nonzero())-1]))]
+    new_df = X_.drop(columns=correlated_columns)
+
+    return new_df
+  
+  def fit_transform(self, X, y = None):
+    result = self.transform(X)
+    return result
+  
+  
 class Sigma3Transformer(BaseEstimator, TransformerMixin):
   def __init__(self,target_column):
     self.target_column = target_column  #column to focus on
