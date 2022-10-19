@@ -191,5 +191,6 @@ class MinMaxTransformer(BaseEstimator, TransformerMixin):
     
   def fit_transform(self, X, y = None):
     result = self.transform(X)
+    print(type(result))
     return result
 
