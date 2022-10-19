@@ -192,4 +192,28 @@ class MinMaxTransformer(BaseEstimator, TransformerMixin):
   def fit_transform(self, X, y = None):
     result = self.transform(X)
     return result
+  
+class KNNTransformer(BaseEstimator, TransformerMixin):
+  def __init__(self,n_neighbors=5, weights="uniform"):
+    #your code
+    self.n_neighbors = n_neighbors
+    self.weights = weights
+  
+  def fit(self, X, y = None):
+    print(f"Warning: {self.__class__.__name__}.fit does nothing.")
+    return X 
+    
+  def transform(self, X):
+    from sklearn.impute import KNNImputer
+    X_ = X.copy()
+    imputer = KNNImputer(n_neighbors= self.n_neighbors, weights=self.weights) 
+    imputed_data = imputer.fit_transform(X_) 
+    new_impdataframe = pd.DataFrame(imputed_data,columns=[column for column in X_.columns])
+    return new_impdataframe
+
+  def fit_transform(self, X, y = None):
+    result = self.transform(X)
+    return result
+
+
 
