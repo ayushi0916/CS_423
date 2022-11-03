@@ -266,12 +266,12 @@ customer_transformer = Pipeline(steps=[
 
 def dataset_setup(full_table, label_column_name:str, the_transformer, rs, ts=.2):
   #your code below
-  titanic_features = full_table.drop(columns=label_column_name)
+  dataset_features = full_table.drop(columns=label_column_name)
   labels = full_table[label_column_name].to_list()
-  X_train, X_test, y_train, y_test = train_test_split(titanic_features, labels, test_size=ts, shuffle=True,
+  X_train, X_test, y_train, y_test = train_test_split(dataset_features, labels, test_size=ts, shuffle=True,
                                                     random_state=rs, stratify=labels)
-  X_train_transformed = titanic_transformer.fit_transform(X_train)
-  X_test_transformed = titanic_transformer.fit_transform(X_test)
+  X_train_transformed = customer_transformer.fit_transform(X_train)
+  X_test_transformed = customer_transformer.fit_transform(X_test)
   x_trained_numpy = X_train_transformed.to_numpy()
   x_test_numpy = X_test_transformed.to_numpy()
   y_train_numpy = np.array(y_train)
