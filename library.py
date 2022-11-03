@@ -280,28 +280,15 @@ def dataset_setup(full_table, label_column_name:str, the_transformer, rs, ts=.2)
   return x_trained_numpy, x_test_numpy, y_train_numpy,  y_test_numpy
 
 def titanic_setup(titanic_table, transformer=titanic_transformer, rs=40, ts=.2):
-  X_train, X_test, y_train, y_test = train_test_split(titanic_table, labels, test_size=ts, shuffle=True,
-                                                    random_state=rs, stratify=labels)
-  X_train_transformed = titanic_transformer.fit_transform(X_train)
-  X_test_transformed = titanic_transformer.fit_transform(X_test)
-  x_trained_numpy = X_train_transformed.to_numpy()
-  x_test_numpy = X_test_transformed.to_numpy()
-  y_train_numpy = np.array(y_train)
-  y_test_numpy = np.array(y_test)
+    x_trained_numpy, x_test_numpy, y_train_numpy,  y_test_numpy = dataset_setup(titanic_table, 'Survived',
+                                                                           titanic_transformer,
+                                                                           rs,ts)
 
-  return x_trained_numpy, x_test_numpy, y_train_numpy,  y_test_numpy
+    return x_trained_numpy, x_test_numpy, y_train_numpy,  y_test_numpy
 
 def customer_setup(customer_table, transformer=customer_transformer, rs=76, ts=.2):
-  customers_features = customer_table.drop(columns=['Rating'])
-  labels = customer_table['Rating'].to_list()
-  X_train, X_test, y_train, y_test = train_test_split(customers_features, labels, test_size=ts, shuffle=True,
-                                                    random_state=rs, stratify=labels)
-                                                    
-  X_train_transformed = customer_transformer.fit_transform(X_train)
-  X_test_transformed = customer_transformer.fit_transform(X_test)
-  x_trained_numpy = X_train_transformed.to_numpy()
-  x_test_numpy = X_test_transformed.to_numpy()
-  y_train_numpy = np.array(y_train)
-  y_test_numpy = np.array(y_test)
+    x_trained_numpy, x_test_numpy, y_train_numpy,  y_test_numpy = dataset_setup(customer_table, 'Rating',
+                                                                           customer_transformer,
+                                                                           rs,ts)
 
-  return x_trained_numpy, x_test_numpy, y_train_numpy,  y_test_numpy
+    return x_trained_numpy, x_test_numpy, y_train_numpy,  y_test_numpy
