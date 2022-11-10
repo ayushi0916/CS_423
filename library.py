@@ -331,5 +331,5 @@ def halving_search(model, grid, x_train, y_train, factor=3, scoring='roc_auc'):
     cv=5, random_state=1234,
     refit=True,  #remembers the best combo and gives us back that model already trained and ready for testing
   )
-  grid_result = halving_cv.fit(x_trained, y_train)
+  grid_result = halving_cv.fit(x_train, y_train)
   return grid_result
