@@ -1,1 +1,4 @@
 This project is utilizing the neo.csv data set from kaggle, to predict if an asteroid is hazardous or not.
+
+As the initial dataset size was 20k downsampled it to 7000
+
