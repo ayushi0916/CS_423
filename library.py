@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import tensorflow as tf
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.pipeline import Pipeline
 from sklearn.metrics import f1_score
@@ -11,6 +12,7 @@ from sklearn.experimental import enable_halving_search_cv
 from sklearn.model_selection import HalvingGridSearchCV
 from xgboost import XGBClassifier
 from sklearn.model_selection import RandomizedSearchCV
+
 
 class MappingTransformer(BaseEstimator, TransformerMixin):
   
